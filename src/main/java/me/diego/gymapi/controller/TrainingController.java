@@ -9,6 +9,7 @@ import me.diego.gymapi.repository.UserRepository;
 import me.diego.gymapi.service.AuthService;
 import me.diego.gymapi.service.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -54,6 +57,16 @@ public class TrainingController {
 
     @DeleteMapping("/{id}")
     public void deleteTraining(@PathVariable Long id) {
-        trainingRepository.deleteById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel user = userDetailsService.loadUserByUsername(authentication.getName());
+
+        Training training = trainingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Training not found"));
+
+        if (!training.getUser().getId().equals(user.getId())) {
+            return;
+        }
+
+        trainingRepository.deleteById(training.getId());
     }
 }

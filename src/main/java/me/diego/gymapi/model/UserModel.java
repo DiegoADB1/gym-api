@@ -23,8 +23,7 @@ public class UserModel implements UserDetails {
     private Long id;
     private String password;
     private String username;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "training_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Training> trainings;
 
     @Override
