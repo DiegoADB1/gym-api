@@ -2,11 +2,11 @@ spring:
   application:
     name: gym-api
   datasource:
-    url: "jdbc:mysql://localhost:3306/gym-api?createDatabaseIfNotExist=true"
-    username: root
-    password: "oS51UwnH7p8q"
+    url: "jdbc:mysql://gym-db.cluster-cfrthrhjmp5a.sa-east-1.rds.amazonaws.com:3306/gym-api?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true"
+    username: admin
+    password: "21s0Gy#PHZ2I"
   jpa:
     hibernate:
       ddl-auto: update
 jwt:
-  secret: "a1f3a93d2e5ee54ef6335d4bee01cb85"
+  secret: "a1f3a93d2e5ee54ef6335d4bee01cb85m"
