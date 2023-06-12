@@ -2,11 +2,10 @@ spring:
   application:
     name: gym-api
   datasource:
-    url: "jdbc:mysql://gym-db.cluster-cfrthrhjmp5a.sa-east-1.rds.amazonaws.com:3306/gym-api?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true"
-    username: admin
-    password: "21s0Gy#PHZ2I"
+    url: "jdbc:sqlite:gym-api.db"
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: "org.hibernate.community.dialect.SQLiteDialect"
 jwt:
   secret: "a1f3a93d2e5ee54ef6335d4bee01cb85m"

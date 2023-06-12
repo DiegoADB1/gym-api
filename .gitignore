@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .mvn
+gym-api.db
 
 ### STS ###
 .apt_generated
