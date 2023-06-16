@@ -1,9 +1,12 @@
 package me.diego.gymapi.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.diego.gymapi.config.security.SecurityConstants;
 import me.diego.gymapi.dto.UserAuthModel;
 import me.diego.gymapi.service.AuthService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +21,9 @@ public class AuthController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<String> signIn(@RequestBody UserAuthModel userAuthModel) {
-        return ResponseEntity.status(HttpStatus.OK).body(authService.signInUser(userAuthModel));
+        String jwt = authService.signInUser(userAuthModel);
+
+        return ResponseEntity.ok(jwt);
     }
 
     @PostMapping(path = "/signup")
