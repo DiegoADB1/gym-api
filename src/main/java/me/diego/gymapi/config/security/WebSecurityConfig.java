@@ -42,16 +42,20 @@ public class WebSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 //.cors(Customizer.withDefaults())
-                .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
-                .authorizeHttpRequests(req -> {
-                            req.requestMatchers("/api/auth/**").permitAll();
-                            req.anyRequest().authenticated();
-                        }
-                )
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .cors(cors -> cors.configurationSource(request -> {
+                            CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+                            corsConfiguration.setAllowedMethods(List.of("GET", "POST", "OPTIONS", "DELETE"));
+                            return corsConfiguration;
+                        }))
+                        .authorizeHttpRequests(req -> {
+                                    req.requestMatchers("/api/auth/**").permitAll();
+                                    req.anyRequest().authenticated();
+                                }
+                        )
+                        .httpBasic(Customizer.withDefaults())
+                        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                        .build();
     }
 
     @Bean
