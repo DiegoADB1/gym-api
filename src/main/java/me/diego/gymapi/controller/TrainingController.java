@@ -48,7 +48,7 @@ public class TrainingController {
                 null,
                 training.getName(),
                 training.getDescription(),
-                LocalDateTime.now(),
+                training.getTime(),
                 user);
 
         return ResponseEntity.ok(trainingRepository.save(saveTraining).toDto());
